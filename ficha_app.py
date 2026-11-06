@@ -107,13 +107,39 @@ def opcion_2_tamano() -> None:
 
 
 def opcion_3_ingresos() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Calcula los ingresos brutos, la comisión de la tienda y el neto."""
+    ingresos_brutos = DESCARGAS * PRECIO
+    importe_comision = ingresos_brutos * COMISION_TIENDA
+    ingresos_netos = ingresos_brutos - importe_comision
+
+    print("INGRESOS")
+    print(fila("Descargas:", f"{DESCARGAS:>{ANCHO_NUMERO}} uds."))
+    print(fila("Precio:", f"{PRECIO:>{ANCHO_NUMERO}.2f} €"))
+    print(fila("Ingresos brutos:", f"{ingresos_brutos:>{ANCHO_NUMERO}.2f} €"))
+    print(fila("Comisión tienda:", f"{importe_comision:>{ANCHO_NUMERO}.2f} €"))
+    print(fila("Ingresos netos:", f"{ingresos_netos:>{ANCHO_NUMERO}.2f} €"))
 
 
 def opcion_4_version() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Empaqueta y desempaqueta la versión en un entero usando bits."""
+    version_original = f"{VERSION_MAYOR}.{VERSION_MENOR}.{VERSION_PARCHE}"
+
+    # Movemos cada parte a su hueco de 8 bits y las juntamos con OR (|)
+    parte_mayor = VERSION_MAYOR << DESPL_MAYOR
+    parte_menor = VERSION_MENOR << DESPL_MENOR
+    version_code = parte_mayor | parte_menor | VERSION_PARCHE
+
+    # Sacamos cada parte moviendo a la derecha y filtrando con 0xFF
+    mayor_recup = (version_code >> DESPL_MAYOR) & MASCARA_BYTE
+    menor_recup = (version_code >> DESPL_MENOR) & MASCARA_BYTE
+    parche_recup = version_code & MASCARA_BYTE
+    desempaquetado = f"{mayor_recup}.{menor_recup}.{parche_recup}"
+
+    print("VERSIONCODE")
+    print(fila("Versión:", version_original))
+    print(fila("versionCode:", version_code))
+    print(fila("En hexadecimal:", f"0x{version_code:06X}"))
+    print(fila("Desempaquetado:", desempaquetado))
 
 
 def opcion_5_permisos() -> None:
