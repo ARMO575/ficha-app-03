@@ -1,53 +1,109 @@
-"""[Docstring del módulo: una sola línea que diga qué hace el programa.]"""
+"""Ficha técnica de una aplicación móvil antes de publicarla en la tienda."""
 
+from decimal import Decimal, ROUND_HALF_UP
+import platform
 from typing import Final
-
-# Añadid aquí las importaciones que necesitéis.
 
 # ---------------------------------------------------------------------------
 # Datos de la aplicación. Sustituid los del ejemplo APP-00 por los vuestros.
 # ---------------------------------------------------------------------------
-CODIGO: Final[str] = "APP-00"
-NOMBRE: Final[str] = "Agenda Escolar"
-PAQUETE: Final[str] = "es.ieseuropa.agenda"
-VERSION_MAYOR, VERSION_MENOR, VERSION_PARCHE = 2, 5, 13
-TAMANO_APK: Final[int] = 48_734_208          # bytes
-DESCARGAS: Final[int] = 12_500
-PRECIO: Final[float] = 1.99                  # euros, IVA incluido
-VALORACIONES: Final[int] = 400
-ESTRELLAS: Final[int] = 1_700                # suma de todas las valoraciones
+CODIGO: Final[str] = "APP-03"
+NOMBRE: Final[str] = "Horario de Bus"
+PAQUETE: Final[str] = "es.transporte.horariobus"
+VERSION_MAYOR, VERSION_MENOR, VERSION_PARCHE = 2, 1, 0
+TAMANO_APK: Final[int] = 25_165_824          # bytes
+DESCARGAS: Final[int] = 41_000
+PRECIO: Final[float] = 0.99                  # euros, IVA incluido
+VALORACIONES: Final[int] = 2_000
+ESTRELLAS: Final[int] = 8_300                # suma de todas las valoraciones
 PERMISOS: Final[int] = 0b0001011
-COLOR_ICONO: Final[int] = 0xFF3A7BD5         # ARGB
+COLOR_ICONO: Final[int] = 0xFF1565C0         # ARGB
 
 # ---------------------------------------------------------------------------
 # Datos del programa. Solo hay que cambiar AUTORES.
 # ---------------------------------------------------------------------------
 VERSION_PROGRAMA: Final[str] = "1.0.0"
-AUTORES: Final[str] = "[usuario] · [usuario]"
+AUTORES: Final[str] = "ARMO575 · alejandromoreno"
 PENDIENTE: Final[str] = "  (opción pendiente de implementar)"
 
 # ---------------------------------------------------------------------------
 # Constantes de la pareja. Todo valor fijo del programa va aquí, con nombre.
 # ---------------------------------------------------------------------------
 ANCHO: Final[int] = 44
+ANCHO_ETIQUETA: Final[int] = 18
+ANCHO_NUMERO: Final[int] = 8
+ANCHO_CANAL: Final[int] = 3
+ANCHO_TIPO: Final[int] = 16
+
+BYTES_POR_MB: Final[int] = 1_000_000
+BYTES_POR_MIB: Final[int] = 1_048_576
+PORCENTAJE: Final[int] = 100
+COMISION_TIENDA: Final[float] = 0.15
+
+DESPL_MAYOR: Final[int] = 16
+DESPL_MENOR: Final[int] = 8
+DESPL_ALFA: Final[int] = 24
+DESPL_ROJO: Final[int] = 16
+DESPL_VERDE: Final[int] = 8
+MASCARA_BYTE: Final[int] = 0xFF
+MAX_CANAL: Final[int] = 255
+
+PERMISO_INTERNET: Final[int] = 0b0000001
+PERMISO_NOTIFICACIONES: Final[int] = 0b0000010
+PERMISO_CAMARA: Final[int] = 0b0000100
+PERMISO_UBICACION: Final[int] = 0b0001000
+PERMISO_CONTACTOS: Final[int] = 0b0010000
+PERMISO_MICROFONO: Final[int] = 0b0100000
+PERMISO_ALMACENAMIENTO: Final[int] = 0b1000000
+
+DECIMALES_1: Final[int] = 1
+DECIMALES_2: Final[int] = 2
+PRECISION_1_DEC: Final[str] = "0.1"
+PRECISION_2_DEC: Final[str] = "0.01"
+
+CARACTER_CABECERA: Final[str] = "="
+CARACTER_SEPARADOR: Final[str] = "-"
+TITULO_FICHA: Final[str] = "FICHA DE LA APLICACIÓN"
 
 
 # ---------------------------------------------------------------------------
 # Funciones auxiliares de la pareja. Al menos una, usada en varias opciones.
 # ---------------------------------------------------------------------------
+def fila(etiqueta: str, valor: object) -> str:
+    """Devuelve una fila con la etiqueta alineada y su valor al lado."""
+    return f"{etiqueta:<{ANCHO_ETIQUETA}}{valor}"
+
+
+def linea_separadora(caracter: str) -> str:
+    """Genera una línea horizontal repitiendo el carácter indicado."""
+    return caracter * ANCHO
 
 
 # ---------------------------------------------------------------------------
 # Las diez opciones. Sustituid el docstring y el print(PENDIENTE).
 # ---------------------------------------------------------------------------
 def opcion_1_identificacion() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Muestra los datos básicos de identificación y la versión de la app."""
+    version_texto = f"{VERSION_MAYOR}.{VERSION_MENOR}.{VERSION_PARCHE}"
+
+    print(fila("Código:", CODIGO))
+    print(fila("Nombre:", NOMBRE))
+    print(fila("Paquete:", PAQUETE))
+    print(fila("Versión:", version_texto))
 
 
 def opcion_2_tamano() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Calcula el tamaño del APK en MB y MiB y su diferencia porcentual."""
+    # Dividimos entre 10^6 para la tienda y entre 2^20 para el móvil
+    tamano_mb = TAMANO_APK / BYTES_POR_MB
+    tamano_mib = TAMANO_APK / BYTES_POR_MIB
+    diferencia = ((tamano_mb - tamano_mib) / tamano_mb) * PORCENTAJE
+
+    print("TAMAÑO DEL APK")
+    print(fila("Bytes:", f"{TAMANO_APK:>{ANCHO_NUMERO}} B"))
+    print(fila("En la tienda:", f"{tamano_mb:>{ANCHO_NUMERO}.2f} MB"))
+    print(fila("En el móvil:", f"{tamano_mib:>{ANCHO_NUMERO}.2f} MiB"))
+    print(fila("Diferencia:", f"{diferencia:>{ANCHO_NUMERO}.1f} %"))
 
 
 def opcion_3_ingresos() -> None:
