@@ -143,13 +143,53 @@ def opcion_4_version() -> None:
 
 
 def opcion_5_permisos() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Comprueba los permisos activos bit a bit y retira el de ubicación."""
+    # Al hacer AND con cada máscara, si no da 0 es que tiene el permiso
+    pide_internet = (PERMISOS & PERMISO_INTERNET) != 0
+    pide_notificaciones = (PERMISOS & PERMISO_NOTIFICACIONES) != 0
+    pide_camara = (PERMISOS & PERMISO_CAMARA) != 0
+    pide_ubicacion = (PERMISOS & PERMISO_UBICACION) != 0
+    pide_contactos = (PERMISOS & PERMISO_CONTACTOS) != 0
+    pide_microfono = (PERMISOS & PERMISO_MICROFONO) != 0
+    pide_almacenamiento = (PERMISOS & PERMISO_ALMACENAMIENTO) != 0
+
+    # Quitamos el permiso de ubicación haciendo AND con su bit invertido (~)
+    sin_ubicacion = PERMISOS & ~PERMISO_UBICACION
+
+    print("PERMISOS")
+    print(fila("En binario:", f"{PERMISOS:07b}"))
+    print(fila("Internet:", pide_internet))
+    print(fila("Notificaciones:", pide_notificaciones))
+    print(fila("Cámara:", pide_camara))
+    print(fila("Ubicación:", pide_ubicacion))
+    print(fila("Contactos:", pide_contactos))
+    print(fila("Micrófono:", pide_microfono))
+    print(fila("Almacenamiento:", pide_almacenamiento))
+    print(fila("Sin ubicación:", f"{sin_ubicacion:07b}"))
 
 
 def opcion_6_color() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Extrae los canales ARGB del color del icono, la opacidad y el CSS."""
+    # Aislamos cada canal desplazando sus bits y limpiando con 0xFF
+    alfa = (COLOR_ICONO >> DESPL_ALFA) & MASCARA_BYTE
+    rojo = (COLOR_ICONO >> DESPL_ROJO) & MASCARA_BYTE
+    verde = (COLOR_ICONO >> DESPL_VERDE) & MASCARA_BYTE
+    azul = COLOR_ICONO & MASCARA_BYTE
+
+    opacidad = (alfa / MAX_CANAL) * PORCENTAJE
+    color_css = f"#{rojo:02X}{verde:02X}{azul:02X}"
+
+    info_rojo = f"{rojo:>{ANCHO_CANAL}}  {rojo:08b}  {rojo:02X}"
+    info_verde = f"{verde:>{ANCHO_CANAL}}  {verde:08b}  {verde:02X}"
+    info_azul = f"{azul:>{ANCHO_CANAL}}  {azul:08b}  {azul:02X}"
+
+    print("COLOR DEL ICONO")
+    print(fila("ARGB:", f"0x{COLOR_ICONO:08X}"))
+    print(fila("Rojo:", info_rojo))
+    print(fila("Verde:", info_verde))
+    print(fila("Azul:", info_azul))
+    print(fila("Opacidad:", f"{opacidad:.1f} %"))
+    print(fila("Para CSS:", color_css))
 
 
 def opcion_7_tipos() -> None:
