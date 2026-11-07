@@ -193,13 +193,56 @@ def opcion_6_color() -> None:
 
 
 def opcion_7_tipos() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Muestra el tipo y el valor de siete datos y sus conversiones."""
+    # Al dividir dos int, Python convierte el resultado a float (implícita)
+    media = ESTRELLAS / VALORACIONES
+    pide_camara = (PERMISOS & PERMISO_CAMARA) != 0
+    # Convertimos las descargas a texto manualmente con str() (explícita)
+    texto_descargas = str(DESCARGAS)
+    parte_mayor = VERSION_MAYOR << DESPL_MAYOR
+    parte_menor = VERSION_MENOR << DESPL_MENOR
+    codigo = parte_mayor | parte_menor | VERSION_PARCHE
+
+    tipo_nom = f"{str(type(NOMBRE)):<{ANCHO_TIPO}}{NOMBRE}"
+    tipo_desc = f"{str(type(DESCARGAS)):<{ANCHO_TIPO}}{DESCARGAS}"
+    tipo_prec = f"{str(type(PRECIO)):<{ANCHO_TIPO}}{PRECIO}"
+    tipo_med = f"{str(type(media)):<{ANCHO_TIPO}}{media}"
+    tipo_cam = f"{str(type(pide_camara)):<{ANCHO_TIPO}}{pide_camara}"
+    tipo_txt = f"{str(type(texto_descargas)):<{ANCHO_TIPO}}{texto_descargas}"
+    tipo_cod = f"{str(type(codigo)):<{ANCHO_TIPO}}{codigo}"
+
+    print("TIPOS DE DATOS")
+    print(fila("NOMBRE:", tipo_nom))
+    print(fila("DESCARGAS:", tipo_desc))
+    print(fila("PRECIO:", tipo_prec))
+    print(fila("media:", tipo_med))
+    print(fila("pide_camara:", tipo_cam))
+    print(fila("texto_descargas:", tipo_txt))
+    print(fila("codigo:", tipo_cod))
 
 
 def opcion_8_redondeo() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Compara el redondeo estándar de Python con el redondeo escolar."""
+    valor_exacto = ESTRELLAS / VALORACIONES
+    # Pasamos a str antes de Decimal para no arrastrar imprecisiones de float
+    media_decimal = Decimal(str(valor_exacto))
+
+    redondeo_py_1 = round(valor_exacto, DECIMALES_1)
+    redondeo_esc_1 = media_decimal.quantize(
+        Decimal(PRECISION_1_DEC), rounding=ROUND_HALF_UP
+    )
+
+    redondeo_py_2 = round(valor_exacto, DECIMALES_2)
+    redondeo_esc_2 = media_decimal.quantize(
+        Decimal(PRECISION_2_DEC), rounding=ROUND_HALF_UP
+    )
+
+    print("REDONDEO DE LA VALORACIÓN MEDIA")
+    print(fila("Valor exacto:", valor_exacto))
+    print(fila("round(), 1 dec.:", redondeo_py_1))
+    print(fila("Escolar, 1 dec.:", redondeo_esc_1))
+    print(fila("round(), 2 dec.:", redondeo_py_2))
+    print(fila("Escolar, 2 dec.:", redondeo_esc_2))
 
 
 def opcion_9_ficha() -> None:
