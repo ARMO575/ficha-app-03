@@ -246,13 +246,32 @@ def opcion_8_redondeo() -> None:
 
 
 def opcion_9_ficha() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Imprime la ficha completa reutilizando las opciones 1 a 4."""
+    borde = linea_separadora(CARACTER_CABECERA)
+    separador = linea_separadora(CARACTER_SEPARADOR)
+
+    print(borde)
+    print(TITULO_FICHA.center(ANCHO))
+    print(borde)
+    opcion_1_identificacion()
+    print(separador)
+    opcion_2_tamano()
+    print(separador)
+    opcion_3_ingresos()
+    print(separador)
+    opcion_4_version()
+    print(borde)
 
 
 def opcion_10_acerca_de() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Muestra la descripción del módulo, versión, autores y Python actual."""
+    version_python = platform.python_version()
+
+    print("ACERCA DE")
+    print(__doc__)
+    print(fila("Versión:", VERSION_PROGRAMA))
+    print(fila("Autores:", AUTORES))
+    print(fila("Python:", version_python))
 
 
 # ---------------------------------------------------------------------------
